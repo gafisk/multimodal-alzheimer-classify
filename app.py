@@ -9,6 +9,10 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
+import os
+
+os.system("pip install --upgrade pip")
+
 
 # Fungsi untuk memuat dan memproses gambar
 def load_and_preprocess_image(filepath, target_size=(224, 224)):
