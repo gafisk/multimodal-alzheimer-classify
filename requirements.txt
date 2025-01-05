@@ -3,7 +3,7 @@ streamlit_option_menu
 pandas
 streamlit_antd_components
 matplotlib
-tensorflow
+tensorflow==2.10.0
 numpy
 openpyxl
 keras
