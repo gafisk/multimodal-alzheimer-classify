@@ -1,10 +1,8 @@
+numpy
+pandas
+tensorflow
+openpyxl
 streamlit
 streamlit_option_menu
-pandas
 streamlit_antd_components
-matplotlib
-tensorflow
-numpy
-openpyxl
 keras
-os
