@@ -5,3 +5,5 @@ streamlit_antd_components
 matplotlib
 tensorflow
 numpy
+openpyxl
+keras
