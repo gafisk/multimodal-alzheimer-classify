@@ -3,7 +3,6 @@ from streamlit_option_menu import option_menu
 import pandas as pd
 import streamlit_antd_components as sac
 import matplotlib.pyplot as plt
-import plotly.express as px
 import tensorflow as tf
 import numpy as np
 from tensorflow.keras.utils import to_categorical

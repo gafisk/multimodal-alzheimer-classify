@@ -1,0 +1,7 @@
+streamlit
+streamlit_option_menu
+pandas
+streamlit_antd_components
+matplotlib
+tensorflow
+numpy
