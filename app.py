@@ -8,6 +8,10 @@ import numpy as np
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
+from tensorflow.keras.applications import EfficientNetB1
+from tensorflow.keras.layers import Input, Dense, Flatten, Concatenate, Dropout
+from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import Adam
 
 
 # Fungsi untuk memuat dan memproses gambar
@@ -25,11 +29,39 @@ def preprocess_tabular(sex, age):
     return np.array([[sex_value, age_value]], dtype=np.float32)
 
 
-def load_model_cache():
-    return load_model("Model.h5")
+def load_model():
+    # Model DenseNet untuk gambar
+    base_efficientNetB1 = EfficientNetB1(weights=None, include_top=False, input_tensor=gambar_input)
+
+    # Tambahkan layer tambahan untuk gambar
+    x = Flatten()(base_efficientNetB1.output)
+    x = Dense(256, activation="relu")(x)
+    x = Dropout(0.5)(x)
+
+    # Input untuk data tabular (2 kolom)
+    tabular_input = Input(shape=(2,), name="tabular_input")
+
+    # Layer untuk tabular data
+    t = Dense(64, activation="relu")(tabular_input)
+    t = Dense(32, activation="relu")(t)
+
+    # Gabungkan data gambar dan tabular
+    combined = Concatenate()([x, t])
+
+    # Layer akhir untuk prediksi
+    output = Dense(len(categorical_labels[0]), activation="softmax", name="output")(combined)
+
+    # Buat model multimodal
+    model = Model(inputs=[gambar_input, tabular_input], outputs=output)
+
+    # Kompilasi model
+    optimizer = Adam(learning_rate=0.001)
+    model.compile(optimizer=optimizer, loss="categorical_crossentropy", metrics=["accuracy"])
+    model.load_weights('Bobot_66.h5')
+    return model
 
 
-model = load_model_cache()
+model = load_model()
 
 st.set_page_config(
     page_title="Alzheimer's Classification",
